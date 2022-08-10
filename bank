@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+	
+    <script>
+      var contract; 
+      $(document).ready(function(){
+        var address ="0xE25Af17D44B67c34916e930061C7A524e5A33aA1";
+        var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "deposit",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]; 
+        
+        web3 = new Web3(web3.currentProvider);
+        window.ethereum.enable();
+        contract = new web3.eth.Contract(abi, address);
+        contract.methods.getBalance().call().then(function(bal){
+          $('#balance').html(bal) ;
+        })
+        
+      })
+    </script>
+  </head>
+  <body>
+    <h3 class="title">First dApp: Bank</h3>
+    My Current Balance is  : <p id="balance">  
+    </p>
+    <h3>
+      Other Operations :
+    </h3>
+    <input type="text" id="amount" size="5">
+    <button id="deposit">
+      Deposit
+    </button>
+    <button id="withdraw">
+      Withdraw
+    </button>
+  </body>
+</html>
